@@ -1,0 +1,18 @@
+{
+  "name": "react-node-env",
+  "version": "1.0.0",
+  "description": "Replace all instances of NODE_ENV with REACT_NODE_ENV",
+  "main": "index.js",
+  "bin": {
+    "react-node-env": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Ty Hopp",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^10.1.0"
+  }
+}
