@@ -1,6 +1,6 @@
 {
   "name": "react-node-env",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Replace all instances of NODE_ENV with REACT_NODE_ENV",
   "main": "index.js",
   "bin": {
