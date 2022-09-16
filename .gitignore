@@ -1,1 +1,4 @@
 node_modules
+.DS_Store
+!tests/fixtures/convert/node_modules
+!tests/fixtures/revert/node_modules

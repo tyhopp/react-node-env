@@ -9,13 +9,13 @@ Useful if you want to enable React's development builds for debugging without ch
 To convert:
 
 ```
-npx react-node-env
+npx react-node-env@latest
 ```
 
 or revert:
 
 ```
-npx react-node-env --revert
+npx react-node-env@latest --revert
 ```
 
 Then you can set the `REACT_NODE_ENV` as you wish, for example:
