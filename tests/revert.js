@@ -7,7 +7,13 @@ const path = require(`path`);
 const fixtureDir = path.resolve(`tests/fixtures/revert`);
 
 const fixture = {
-  filePaths: [`react`, `react-dom`].flatMap((package) => [
+  filePaths: [
+    `react`,
+    `react-dom`,
+    `react-is`,
+    `react-server-dom-webpack`,
+    `scheduler`,
+  ].flatMap((package) => [
     path.join(fixtureDir, `node_modules`, package, `index.js`),
     path.join(fixtureDir, `node_modules`, package, `cjs`, `index.js`),
     path.join(fixtureDir, `node_modules`, package, `umd`, `index.js`),
