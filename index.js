@@ -19,8 +19,16 @@ const fromString = revert ? `REACT_NODE_ENV` : `NODE_ENV`;
 const toString = revert ? `NODE_ENV` : `REACT_NODE_ENV`;
 
 async function main() {
-  const packages = [`react`, `react-dom`];
+  const packages = [
+    `react`,
+    `react-dom`,
+    `react-is`,
+    `react-server-dom-webpack`,
+    `scheduler`,
+  ];
   const files = [];
+
+  const adjustedPackages = new Set();
 
   // Could do this recursively, keep it simple instead
   for (const package of packages) {
@@ -29,6 +37,14 @@ async function main() {
     const umd = path.resolve(root, `umd`);
 
     for (const dir of [root, cjs, umd]) {
+      if (!fs.existsSync(dir)) {
+        continue;
+      }
+
+      if (!adjustedPackages.has(package)) {
+        adjustedPackages.add(package);
+      }
+
       const dirFiles = ((await fs.readdir(dir)) || []).filter(
         (file) => path.extname(file).toLowerCase() === `.js`
       );
@@ -39,7 +55,7 @@ async function main() {
     }
   }
 
-  let errored = false;
+  const adjustedPackagesStringified = Array.from(adjustedPackages).join(`, `);
 
   for (const file of files) {
     try {
@@ -49,31 +65,22 @@ async function main() {
         `${toString}`
       );
       await fs.writeFile(file, content);
-    } catch (error) {
-      console.error(
-        `\x1b[31m`,
-        `Failed to replace "${fromString}" with "${toString}" in ${packages.join(
-          ` and `
-        )}\n\n`,
-        `\x1b[0m`,
-        error
+    } catch (cause) {
+      throw new Error(
+        `Failed to replace ${fromString} with ${toString} in ${file}`,
+        { cause }
       );
-
-      errored = true;
-
-      break;
     }
   }
 
-  if (!errored) {
-    console.info(
-      `\x1b[32m`,
-      `Successfully replaced "${fromString}" with "${toString}" in ${packages.join(
-        ` and `
-      )}`,
-      `\x1b[0m`
-    );
+  if (!adjustedPackages.size) {
+    console.info(`No packages were adjusted, is react installed?`);
+    process.exit(0);
   }
+
+  console.info(
+    `Replaced ${fromString} with ${toString} in these packages:\n${adjustedPackagesStringified}`
+  );
 }
 
 main();
