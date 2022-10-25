@@ -3,6 +3,9 @@
   "version": "1.0.1",
   "description": "Replace all instances of NODE_ENV with REACT_NODE_ENV",
   "main": "index.js",
+  "files": [
+    "index.js"
+  ],
   "bin": {
     "react-node-env": "index.js"
   },
